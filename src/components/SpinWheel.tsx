@@ -158,7 +158,9 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
           >
             TOURNEZ&nbsp;LA&nbsp;ROUE&nbsp;ET&nbsp;GAGNEZ&nbsp;!
           </p>
-          {/* ── Wheel stage ── */}
+        </motion.div>
+
+        {/* ── Wheel stage ── */}
         <motion.div
           className="relative flex items-center justify-center w-full wheel-stage"
           style={{
