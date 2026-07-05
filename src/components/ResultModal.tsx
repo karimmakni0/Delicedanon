@@ -93,6 +93,9 @@ const ResultModal: React.FC<ResultModalProps> = ({
   const isPremium   = PREMIUM_PRIZES.has(winner.id);
   const isDanup     = winner.id === 'danup';
 
+  const displayName = winner.id === 'chasselane' ? 'Chaise de plage' : winner.name;
+  const displayTagline = winner.id === 'chasselane' ? 'Profitez pleinement de vos journées en bord de mer.' : winner.tagline;
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -232,7 +235,7 @@ const ResultModal: React.FC<ResultModalProps> = ({
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.48 }}
                   >
-                    {winner.name}
+                    {displayName}
                   </motion.h2>
 
                   {/* Tagline */}
@@ -243,7 +246,7 @@ const ResultModal: React.FC<ResultModalProps> = ({
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.56 }}
                   >
-                    "{winner.tagline}"
+                    "{displayTagline}"
                   </motion.p>
 
                   {/* Stars — 5 for premium, 3 for Danup */}
