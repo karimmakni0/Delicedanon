@@ -36,7 +36,8 @@ interface WheelCanvasProps {
 
 const WheelCanvas: React.FC<WheelCanvasProps> = ({ rotation, isSpinning, radius = 300, spinDuration }) => {
   const { segments, logoImage, spinDuration: defaultDuration } = wheelConfig;
-  const effectiveDuration = spinDuration ?? defaultDuration;
+  // Cap spin duration strictly between 4.0 and 6.0 seconds for suspense
+  const effectiveDuration = Math.min(6000, Math.max(4000, spinDuration ?? defaultDuration));
   const n        = segments.length;
   const segAngle = 360 / n;
 
@@ -60,7 +61,8 @@ const WheelCanvas: React.FC<WheelCanvasProps> = ({ rotation, isSpinning, radius 
   const spinTransition = {
     type:     'tween' as const,
     duration: isSpinning ? effectiveDuration / 1000 : 0,
-    ease:     (isSpinning ? [0.12, 0.82, 0.08, 1.0] : 'linear') as any,
+    // [0.25, 0.05, 0.12, 1.06]: slow start -> rapid acceleration -> progressive deceleration -> subtle bounce-back at the end
+    ease:     (isSpinning ? [0.25, 0.05, 0.12, 1.06] : 'linear') as any,
   };
 
   // Product image base size: 45% of radius on desktop, ~58% of radius on mobile (~28% increase)
@@ -127,7 +129,15 @@ const WheelCanvas: React.FC<WheelCanvasProps> = ({ rotation, isSpinning, radius 
       <motion.svg
         viewBox={`0 0 ${size} ${size}`}
         className="w-full h-full"
-        style={{ position: 'absolute', inset: 0, overflow: 'visible' }}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          overflow: 'visible',
+          filter: isSpinning
+            ? 'blur(1.6px) drop-shadow(0 0 15px rgba(0, 180, 255, 0.45))'
+            : 'none',
+          transition: 'filter 0.3s ease',
+        }}
         animate={{ rotate: rotation }}
         transition={spinTransition}
       >
