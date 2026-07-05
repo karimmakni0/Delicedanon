@@ -24,10 +24,8 @@
 import { useState, useCallback, useRef } from 'react';
 
 // ── Constants ────────────────────────────────────────────────────────────────
-export const TOTAL_SPINS      = 52;
-const PRIZE_GLACIERE          = 2;
-const PRIZE_CHASSELANE        = 2;
-const PRIZE_DANUP             = TOTAL_SPINS - PRIZE_GLACIERE - PRIZE_CHASSELANE; // 48
+// Prize breakdown: 48 × Danup, 2 × Glacière, 2 × Chasselane = 52 total
+export const TOTAL_SPINS = 52;
 
 // Use v4 keys — clears any old v3 block-based pools
 const LS_POOL_KEY  = 'delice_v4_prize_pool';
