@@ -201,5 +201,61 @@ html, body, #root {
     right: 14px !important;
     z-index: 100 !important;
   }
+
+  /* ── Reward Modal responsive improvements ── */
+  .modal-content-body {
+    padding: 16px 20px 18px !important; /* reduce padding & top space */
+  }
+
+  .modal-badge {
+    margin-bottom: 8px !important;
+  }
+
+  .modal-image-container {
+    height: 150px !important; /* increase display size container */
+    margin-top: 4px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .modal-glow-ring {
+    width: 75px !important;
+    height: 75px !important;
+    opacity: 0.12 !important; /* subtle and elegant glow */
+  }
+
+  .modal-prize-image {
+    height: 150px !important; /* prize image between 140-180px */
+    max-width: 170px !important;
+    margin: 0 auto !important; /* perfectly center the product */
+  }
+
+  .modal-congrats {
+    margin-bottom: 2px !important;
+    font-size: 11px !important;
+  }
+
+  .modal-title {
+    font-size: 1.55rem !important; /* compact prize title size */
+    margin-bottom: 2px !important;
+  }
+
+  .modal-tagline {
+    font-size: 12px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .modal-stars {
+    margin-bottom: 12px !important;
+  }
+
+  .modal-cta {
+    gap: 8px !important;
+  }
+
+  .modal-cta button, .modal-cta div {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    border-radius: 12px !important;
+  }
 }
 

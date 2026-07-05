@@ -156,11 +156,11 @@ const ResultModal: React.FC<ResultModalProps> = ({
                   }}
                 />
 
-                <div className="px-7 py-7 text-center">
+                <div className="px-7 py-7 text-center modal-content-body">
 
                   {/* Header badge */}
                   <motion.div
-                    className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full mb-5 text-[11px] font-black tracking-widest uppercase shadow-sm border"
+                    className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full mb-5 text-[11px] font-black tracking-widest uppercase shadow-sm border modal-badge"
                     style={{
                       background:  isPremium ? 'rgba(0,51,141,0.07)' : 'rgba(0,51,141,0.04)',
                       borderColor: 'rgba(0,51,141,0.12)',
@@ -178,14 +178,14 @@ const ResultModal: React.FC<ResultModalProps> = ({
 
                   {/* Product image */}
                   <motion.div
-                    className="mb-5 flex justify-center items-center h-32 relative"
+                    className="mb-5 flex justify-center items-center h-32 relative modal-image-container"
                     initial={{ scale: 0, rotate: isPremium ? -20 : -8 }}
                     animate={{ scale: 1, rotate: 0 }}
                     transition={{ type: 'spring', stiffness: 300, damping: 18, delay: 0.32 }}
                   >
                     {/* Ring glow */}
                     <div
-                      className="absolute w-24 h-24 rounded-full blur-xl"
+                      className="absolute w-24 h-24 rounded-full blur-xl modal-glow-ring"
                       style={{
                         backgroundColor: winner.colorLight,
                         opacity:         isPremium ? 0.30 : 0.15,
@@ -196,7 +196,7 @@ const ResultModal: React.FC<ResultModalProps> = ({
                       <img
                         src={winner.image}
                         alt={winner.name}
-                        className="h-32 max-w-[145px] object-contain relative z-10"
+                        className="h-32 max-w-[145px] object-contain relative z-10 modal-prize-image"
                         style={{
                           filter:       'drop-shadow(0 10px 22px rgba(0,0,0,0.22))',
                           mixBlendMode: 'multiply',
@@ -209,7 +209,7 @@ const ResultModal: React.FC<ResultModalProps> = ({
 
                   {/* Congratulation line */}
                   <motion.p
-                    className="text-xs font-black uppercase tracking-[0.22em] mb-1"
+                    className="text-xs font-black uppercase tracking-[0.22em] mb-1 modal-congrats"
                     style={{ color: isPremium ? '#43A047' : '#1565C0' }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -222,7 +222,7 @@ const ResultModal: React.FC<ResultModalProps> = ({
 
                   {/* Product name */}
                   <motion.h2
-                    className="font-extrabold mb-1 tracking-tight"
+                    className="font-extrabold mb-1 tracking-tight modal-title"
                     style={{
                       fontSize:   isPremium ? '2.25rem' : '1.9rem',
                       color:      winner.color,
@@ -237,7 +237,7 @@ const ResultModal: React.FC<ResultModalProps> = ({
 
                   {/* Tagline */}
                   <motion.p
-                    className="text-sm italic font-medium mb-5 px-2"
+                    className="text-sm italic font-medium mb-5 px-2 modal-tagline"
                     style={{ color: '#546E7A' }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -248,7 +248,7 @@ const ResultModal: React.FC<ResultModalProps> = ({
 
                   {/* Stars — 5 for premium, 3 for Danup */}
                   <motion.div
-                    className="flex justify-center gap-1 mb-7"
+                    className="flex justify-center gap-1 mb-7 modal-stars"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.62 }}
@@ -265,7 +265,7 @@ const ResultModal: React.FC<ResultModalProps> = ({
 
                   {/* CTA buttons */}
                   <motion.div
-                    className="flex gap-3"
+                    className="flex gap-3 modal-cta"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.68 }}
