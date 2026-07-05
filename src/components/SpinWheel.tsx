@@ -275,20 +275,21 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
               }}
             >
               <WheelCanvas rotation={currentRotation} isSpinning={isSpinning} radius={radius} spinDuration={spinDuration} />
-            </div>
 
-            <div
-              style={{
-                position: 'absolute',
-                right: 0,
-                top: '50%',
-                transform: 'translateY(-50%)',
-                width: `${(100 / standW) * 100}%`,
-                height: `${((130 * 1.2) / standH) * 100}%`,
-                marginTop: `${(8 / standH) * 100}%`,
-              }}
-            >
-              <Pointer wheelRadius={radius} isLanded={isLanded} />
+              {/* ── Premium Long Pointer centered vertically at the right edge of the wheel ── */}
+              <div
+                style={{
+                  position:  'absolute',
+                  left:      '98.2%', // touches the outer chrome border of the wheel perfectly
+                  top:       '50%',
+                  transform: 'translateY(-50%)',
+                  width:     'clamp(55px, 6.5vw, 95px)',
+                  height:    'clamp(22px, 2.6vw, 34px)',
+                  zIndex:    30,
+                }}
+              >
+                <Pointer wheelRadius={radius} isLanded={isLanded} />
+              </div>
             </div>
           </motion.div>
         </motion.div>
