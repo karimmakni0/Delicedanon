@@ -68,8 +68,7 @@ const WheelCanvas: React.FC<WheelCanvasProps> = ({ rotation, isSpinning, radius 
 
   return (
     <div
-      className="relative flex items-center justify-center select-none"
-      style={{ width: size, height: size }}
+      className="relative flex items-center justify-center select-none w-full h-full"
     >
 
       {/* ── Multi-layer ambient shadow below wheel ── */}
@@ -101,7 +100,7 @@ const WheelCanvas: React.FC<WheelCanvasProps> = ({ rotation, isSpinning, radius 
             #546E7A 90%,
             #263238 100%
           )`,
-          padding: 11,
+          padding: '1.8%', // relative padding so it scales down on mobile
           boxShadow: `
             inset 0  5px 12px rgba(255,255,255,0.95),
             inset 0 -5px 12px rgba(0,0,0,0.50),
@@ -115,7 +114,7 @@ const WheelCanvas: React.FC<WheelCanvasProps> = ({ rotation, isSpinning, radius 
           className="w-full h-full rounded-full"
           style={{
             background: 'linear-gradient(180deg, #001840 0%, #000b1e 100%)',
-            padding: 5,
+            padding: '1.2%',
           }}
         >
           <div className="w-full h-full rounded-full bg-black opacity-90" />
@@ -125,8 +124,7 @@ const WheelCanvas: React.FC<WheelCanvasProps> = ({ rotation, isSpinning, radius 
       {/* ── Rotating SVG Wheel ── */}
       <motion.svg
         viewBox={`0 0 ${size} ${size}`}
-        width={size}
-        height={size}
+        className="w-full h-full"
         style={{ position: 'absolute', inset: 0, overflow: 'visible' }}
         animate={{ rotate: rotation }}
         transition={spinTransition}
@@ -349,9 +347,7 @@ const WheelCanvas: React.FC<WheelCanvasProps> = ({ rotation, isSpinning, radius 
       {/* ── Static glass top-half reflection (non-rotating) ── */}
       <svg
         viewBox={`0 0 ${size} ${size}`}
-        width={size}
-        height={size}
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none w-full h-full"
         style={{ overflow: 'visible' }}
       >
         <defs>

@@ -37,7 +37,7 @@ const App: React.FC = () => {
 
   return (
     <main
-      className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden select-none"
+      className="min-h-screen w-full flex flex-col items-center justify-center p-4 relative overflow-x-hidden select-none"
       style={{
         backgroundImage:    'url(/background.jpg)',
         backgroundSize:     'cover',

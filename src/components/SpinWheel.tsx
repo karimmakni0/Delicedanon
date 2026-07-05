@@ -18,15 +18,20 @@ import { useSpinLogic } from '../hooks/useSpinLogic';
 import { TOTAL_SPINS } from '../hooks/usePrizePool';
 
 const getRadius = () => {
-  if (typeof window === 'undefined') return 380;
+  if (typeof window === 'undefined') return 340;
   const vw = window.innerWidth;
   const vh = window.innerHeight;
-  const byH = Math.round(vh * 0.34);
-  const byW = Math.round(vw * 0.40);
-  const r   = Math.min(byH, byW);
-  if (vw < 480) return Math.min(r, 185);
-  if (vw < 768) return Math.min(r, 270);
-  return Math.min(r, 380);
+  
+  if (vw < 768) {
+    // Mobile layout: wheel takes a larger portion of screen width
+    const targetW = Math.min(vw * 0.78, vh * 0.45);
+    return Math.max(130, Math.round(targetW / 2 - 26));
+  } else {
+    // Desktop layout
+    const byH = Math.round(vh * 0.34);
+    const byW = Math.round(vw * 0.38);
+    return Math.min(Math.min(byH, byW), 350);
+  }
 };
 
 interface SpinWheelProps {
@@ -96,22 +101,23 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
 
   return (
     <>
-      <div className="flex flex-col items-center gap-2 w-full">
+      <div className="flex flex-col items-center gap-4 w-full md:gap-6">
 
         {/* ── Header: logo + slogan ── */}
         <motion.div
-          className="flex flex-col items-center text-center select-none"
+          className="flex flex-col items-center text-center select-none w-full"
           style={{ marginBottom: 4 }}
           initial={{ opacity: 0, y: -18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, ease: 'easeOut' }}
         >
           {/* Soft radial glow behind logo */}
-          <div className="relative flex items-center justify-center">
+          <div className="relative flex items-center justify-center w-full">
             <div
               className="absolute pointer-events-none"
               style={{
-                width:      '420px',
+                width:      '100%',
+                maxWidth:   '420px',
                 height:     '220px',
                 background: 'radial-gradient(ellipse, rgba(80,160,255,0.28) 0%, rgba(0,80,220,0.10) 55%, transparent 75%)',
                 filter:     'blur(28px)',
@@ -127,7 +133,7 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
               alt="Délice"
               className="logo-float relative z-10"
               style={{
-                width:     'clamp(640px, 60vw, 720px)',
+                width:     'clamp(220px, 45vw, 680px)',
                 height:    'auto',
                 objectFit: 'contain',
                 display:   'block',
@@ -156,7 +162,11 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
 
         {/* ── Wheel stage ── */}
         <motion.div
-          className="relative flex items-center justify-center"
+          className="relative flex items-center justify-center w-full"
+          style={{
+            maxWidth: standW,
+            aspectRatio: `${standW} / ${standH}`,
+          }}
           initial={{ opacity: 0, scale: 0.88 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.82, ease: 'easeOut', delay: 0.12 }}
@@ -165,8 +175,8 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
           <div
             className="absolute rounded-full pointer-events-none"
             style={{
-              width:      wheelDiameter * 1.1,
-              height:     wheelDiameter * 1.1,
+              width:      '110%',
+              height:     '110%',
               top:        '50%',
               left:       '50%',
               transform:  'translate(-50%,-50%)',
@@ -177,11 +187,9 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
 
           {/* Premium Metallic Chrome Stand */}
           <svg
-            width={standW}
-            height={standH}
             viewBox={`0 0 ${standW} ${standH}`}
-            className="absolute pointer-events-none"
-            style={{ zIndex: 0, top: 6, left: 0 }}
+            className="absolute pointer-events-none w-full h-full"
+            style={{ zIndex: 0, top: 0, left: 0 }}
           >
             <defs>
               <linearGradient id="chromeStand" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -251,14 +259,21 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
 
           {/* Wheel + Pointer wrapper */}
           <motion.div
-            className="relative cursor-pointer z-10"
-            style={{ width: standW, height: wheelDiameter + 26 }}
+            className="absolute top-0 left-0 w-full h-full cursor-pointer z-10"
             animate={wheelWrapperAnimation}
             transition={wheelWrapperTransition}
             whileHover={isSpinning || isGameOver ? {} : { scale: 1.022 }}
             onClick={() => { if (!isSpinning && !isGameOver) spin(); }}
           >
-            <div style={{ position: 'absolute', top: 10, left: 0 }}>
+            <div
+              style={{
+                position: 'absolute',
+                top: `${(10 / standH) * 100}%`,
+                left: 0,
+                width: `${(wheelDiameter / standW) * 100}%`,
+                height: `${(wheelDiameter / standH) * 100}%`,
+              }}
+            >
               <WheelCanvas rotation={currentRotation} isSpinning={isSpinning} radius={radius} spinDuration={spinDuration} />
             </div>
 
@@ -268,7 +283,9 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
                 right: 0,
                 top: '50%',
                 transform: 'translateY(-50%)',
-                marginTop: 8,
+                width: `${(100 / standW) * 100}%`,
+                height: `${((130 * 1.2) / standH) * 100}%`,
+                marginTop: `${(8 / standH) * 100}%`,
               }}
             >
               <Pointer wheelRadius={radius} isLanded={isLanded} />
@@ -281,14 +298,15 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.32 }}
+          className="mt-2 w-full flex justify-center"
         >
           {isGameOver ? (
             /* ── Game over state ── */
             <div
-              className="relative flex items-center gap-3 rounded-full font-black uppercase text-white select-none"
+              className="relative flex items-center justify-center gap-3 rounded-full font-black uppercase text-white select-none"
               style={{
-                padding:       '18px 56px',
-                fontSize:      'clamp(14px, 2vw, 18px)',
+                padding:       'clamp(12px, 2.5vw, 18px) clamp(32px, 6vw, 56px)',
+                fontSize:      'clamp(13px, 1.8vw, 18px)',
                 letterSpacing: '0.18em',
                 background:    'linear-gradient(135deg, #37474F, #263238)',
                 border:        '2px solid rgba(255,255,255,0.12)',
@@ -305,8 +323,8 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
               disabled={isSpinning}
               className="relative flex items-center gap-3.5 rounded-full font-black uppercase text-white overflow-hidden select-none"
               style={{
-                padding:      '18px 56px',
-                fontSize:     'clamp(14px, 2vw, 18px)',
+                padding:      'clamp(12px, 2.5vw, 18px) clamp(32px, 6vw, 56px)',
+                fontSize:     'clamp(13px, 1.8vw, 18px)',
                 letterSpacing: '0.18em',
                 background: isSpinning
                   ? 'linear-gradient(135deg, #37474F, #1C313A)'
