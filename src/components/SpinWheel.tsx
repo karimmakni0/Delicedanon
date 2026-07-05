@@ -101,7 +101,7 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
 
   return (
     <>
-      <div className="flex flex-col items-center gap-4 w-full md:gap-6">
+      <div className="flex flex-col items-center gap-4 w-full md:gap-6 spinwheel-container">
 
         {/* ── Header: logo + slogan ── */}
         <motion.div
