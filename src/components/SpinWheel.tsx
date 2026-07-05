@@ -158,11 +158,9 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
           >
             TOURNEZ&nbsp;LA&nbsp;ROUE&nbsp;ET&nbsp;GAGNEZ&nbsp;!
           </p>
-        </motion.div>
-
-        {/* ── Wheel stage ── */}
+          {/* ── Wheel stage ── */}
         <motion.div
-          className="relative flex items-center justify-center w-full"
+          className="relative flex items-center justify-center w-full wheel-stage"
           style={{
             maxWidth: standW,
             aspectRatio: `${standW} / ${standH}`,
@@ -266,6 +264,7 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
             onClick={() => { if (!isSpinning && !isGameOver) spin(); }}
           >
             <div
+              className="wheel-canvas-container"
               style={{
                 position: 'absolute',
                 top: `${(10 / standH) * 100}%`,
@@ -278,6 +277,7 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
 
               {/* ── Premium Luxury Golden Pointer overlapping the wheel border ── */}
               <div
+                className="pointer-container"
                 style={{
                   position:  'absolute',
                   left:      '96.5%', // slightly overlaps the wheel rim border by 8-12px for physical realism
@@ -299,7 +299,7 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.32 }}
-          className="mt-2 w-full flex justify-center"
+          className="mt-2 w-full flex justify-center spin-button-container"
         >
           {isGameOver ? (
             /* ── Game over state ── */
