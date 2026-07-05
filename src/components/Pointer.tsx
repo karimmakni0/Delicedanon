@@ -1,12 +1,12 @@
 /**
- * Pointer.tsx — Premium Long 3D Metallic Needle Pointer
+ * Pointer.tsx — Premium Casino-Style Triangular Pointer
  *
  * Design features:
- * - Long 3D metallic needle pointing from right to left (toward the wheel).
- * - Split lighting chrome needle (upper light, lower dark) for realistic 3D depth.
- * - Circular gold chrome pivot base at the right end.
- * - Snap/jiggle animation pivoting perfectly around the base center (105, 20).
- * - Responsive w-full h-full SVG styling.
+ * - Thick, substantial 3D triangular pointer pointing left (towards the wheel).
+ * - Rich glossy blue body with split 3D lighting (light blue upper, dark navy lower).
+ * - Thick metallic chrome/silver outer border.
+ * - Solid heavy chrome mounting hub (base plate + bolt head) at the right end.
+ * - Dynamic snap/jiggle pivoting around the hub center (96, 25).
  */
 
 import React from 'react';
@@ -18,130 +18,127 @@ interface PointerProps {
 }
 
 const Pointer: React.FC<PointerProps> = ({ isLanded = false }) => {
-  // Pivot jiggle: needle tips up/down slightly when hitting wheel pins
+  // Classic snap rotation when hitting pegs: lifts up slightly and snaps back
   const pointerAnimation = isLanded
-    ? { rotate: [0, -12, 8, -3, 0] }
+    ? { rotate: [0, -14, 9, -3, 0] }
     : { rotate: 0 };
 
   const pointerTransition = isLanded
-    ? { type: 'spring' as const, stiffness: 400, damping: 10 }
+    ? { type: 'spring' as const, stiffness: 420, damping: 10 }
     : { duration: 0.15 };
 
   return (
     <div className="w-full h-full relative z-20 flex items-center justify-start pointer-events-none select-none">
-      {/* Soft blue glow backing the base */}
+      {/* Intense backing glow for high presence */}
       <motion.div
-        className="absolute w-2/3 h-full rounded-full blur-lg pointer-events-none"
+        className="absolute w-full h-full rounded-full blur-xl pointer-events-none"
         style={{
           background: isLanded
-            ? 'radial-gradient(circle, rgba(0,229,255,0.85) 0%, rgba(0,102,255,0.25) 50%, transparent 70%)'
-            : 'radial-gradient(circle, rgba(0,102,255,0.50) 0%, rgba(0,40,150,0.10) 60%, transparent 80%)',
+            ? 'radial-gradient(circle, rgba(0,191,255,0.90) 0%, rgba(0,80,255,0.25) 50%, transparent 70%)'
+            : 'radial-gradient(circle, rgba(0,102,255,0.55) 0%, rgba(0,35,160,0.12) 60%, transparent 80%)',
           right: '-10%',
           top: '0%',
         }}
-        animate={{ opacity: isLanded ? [0.6, 0.9, 0.6] : [0.35, 0.6, 0.35] }}
-        transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+        animate={{ opacity: isLanded ? [0.75, 1.0, 0.75] : [0.4, 0.65, 0.4] }}
+        transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
       />
 
       <motion.svg
         width="100%"
         height="100%"
-        viewBox="0 0 120 40"
+        viewBox="0 0 120 50"
         fill="none"
         animate={pointerAnimation}
         transition={pointerTransition}
         style={{
-          transformOrigin: '105px 20px',
+          transformOrigin: '96px 25px',
           filter: `
-            drop-shadow(0 0 12px rgba(0,180,255,0.75))
-            drop-shadow(0 3px 8px rgba(0,8,40,0.50))
+            drop-shadow(0 0 15px rgba(0,160,255,0.85))
+            drop-shadow(0 4px 12px rgba(0,8,42,0.65))
           `,
         }}
       >
         <defs>
-          {/* Chrome needle top-half bevel (light) */}
-          <linearGradient id="needleLight" x1="0%" y1="0%" x2="100%" y2="100%">
+          {/* Metallic Silver Border Gradient */}
+          <linearGradient id="silverChromeBorder" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#FFFFFF" />
-            <stop offset="50%" stopColor="#ECEFF1" />
-            <stop offset="100%" stopColor="#CFD8DC" />
+            <stop offset="25%" stopColor="#CFD8DC" />
+            <stop offset="50%" stopColor="#78909C" />
+            <stop offset="75%" stopColor="#ECEFF1" />
+            <stop offset="100%" stopColor="#37474F" />
           </linearGradient>
 
-          {/* Chrome needle bottom-half bevel (dark shadow) */}
-          <linearGradient id="needleDark" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#90A4AE" />
-            <stop offset="60%" stopColor="#455A64" />
+          {/* Heavy Chrome Hub Plate Gradient */}
+          <linearGradient id="chromeHub" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#ECEFF1" />
+            <stop offset="45%" stopColor="#90A4AE" />
             <stop offset="100%" stopColor="#263238" />
           </linearGradient>
 
-          {/* Golden base ring gradient */}
-          <linearGradient id="goldBase" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FFFDE7" />
-            <stop offset="30%" stopColor="#FFE082" />
-            <stop offset="70%" stopColor="#FFB300" />
-            <stop offset="100%" stopColor="#E65100" />
+          {/* Bolt Head Chrome Gradient */}
+          <linearGradient id="boltGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FFFFFF" />
+            <stop offset="50%" stopColor="#B0BEC5" />
+            <stop offset="100%" stopColor="#37474F" />
           </linearGradient>
 
-          {/* Blue glass gem radial fill */}
-          <radialGradient id="blueGlassGem" cx="35%" cy="35%" r="65%">
-            <stop offset="0%" stopColor="#E0F7FA" />
-            <stop offset="35%" stopColor="#00E5FF" />
-            <stop offset="75%" stopColor="#0066FF" />
-            <stop offset="100%" stopColor="#0A1966" />
-          </radialGradient>
+          {/* Glossy Upper Blue Body Bevel */}
+          <linearGradient id="glossyBlueUpper" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#00E5FF" />
+            <stop offset="35%" stopColor="#00A2FF" />
+            <stop offset="100%" stopColor="#0052FF" />
+          </linearGradient>
 
-          {/* Bevel highlight stroke */}
-          <linearGradient id="sheenStroke" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.9" />
-            <stop offset="80%" stopColor="#FFFFFF" stopOpacity="0.2" />
+          {/* Deeper Lower Blue Body Bevel */}
+          <linearGradient id="glossyBlueLower" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#004CFF" />
+            <stop offset="50%" stopColor="#002DCC" />
+            <stop offset="100%" stopColor="#0A1880" />
+          </linearGradient>
+
+          {/* Sheen Highlight along the top edge */}
+          <linearGradient id="sheenHighlight" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.95" />
+            <stop offset="70%" stopColor="#FFFFFF" stopOpacity="0.15" />
           </linearGradient>
         </defs>
 
-        {/* ── Needle Body (Left-pointing Long Arrow) ── */}
-        {/* Upper face: Light bevel */}
-        <path d="M 5 20 L 105 10 L 105 20 Z" fill="url(#needleLight)" />
-
-        {/* Lower face: Dark bevel */}
-        <path d="M 5 20 L 105 20 L 105 30 Z" fill="url(#needleDark)" />
-
-        {/* Highlight edge line along the upper bevel rim */}
-        <path d="M 5 20 L 105 10" stroke="url(#sheenStroke)" strokeWidth="1.2" strokeLinecap="round" />
-
-        {/* Dark separator line along the bottom bevel rim */}
-        <path d="M 5 20 L 105 30" stroke="#1C2D37" strokeWidth="1.0" opacity="0.5" />
-
-        {/* Ridge shadow separator (centerline of 3D needle) */}
-        <line x1="5" y1="20" x2="105" y2="20" stroke="#37474F" strokeWidth="1.0" opacity="0.4" />
-
-        {/* ── Golden Chrome Pivot Base ── */}
-        {/* Outer shadow ring */}
-        <circle cx="105" cy="20" r="14" fill="#0E1929" opacity="0.6" />
-
-        {/* Golden outer rim */}
-        <circle cx="105" cy="20" r="12" fill="url(#goldBase)" stroke="#FFFFFF" strokeWidth="0.6" />
-
-        {/* Inner dark groove */}
-        <circle cx="105" cy="20" r="8" fill="#0D2040" />
-
-        {/* Center blue gem */}
-        <circle
-          cx="105"
-          cy="20"
-          r="6.5"
-          fill="url(#blueGlassGem)"
-          stroke="#FFFFFF"
-          strokeWidth="0.8"
-          style={{ filter: 'drop-shadow(0 0 3px rgba(0,229,255,0.85))' }}
+        {/* ── Outer Metallic Border (Triangular shape) ── */}
+        <polygon
+          points="6,25 90,8 90,42"
+          fill="none"
+          stroke="url(#silverChromeBorder)"
+          strokeWidth="4.5"
+          strokeLinejoin="round"
         />
 
-        {/* Gem reflection sheen */}
-        <path
-          d="M 100 18 A 5 5 0 0 1 110 18 Z"
-          fill="#FFFFFF"
-          opacity="0.6"
-        />
+        {/* ── Inner Blue Body bevels ── */}
+        {/* Upper half bevel */}
+        <path d="M 8 25 L 88 10 L 88 25 Z" fill="url(#glossyBlueUpper)" />
 
-        {/* Tiny center dot */}
-        <circle cx="105" cy="20" r="1.5" fill="#FFFFFF" opacity="0.9" />
+        {/* Lower half bevel */}
+        <path d="M 8 25 L 88 25 L 88 40 Z" fill="url(#glossyBlueLower)" />
+
+        {/* Gloss sheen overlay on top half edge */}
+        <path d="M 8 25 L 88 10" stroke="url(#sheenHighlight)" strokeWidth="1.8" strokeLinecap="round" />
+
+        {/* Ridge Separator Line */}
+        <line x1="8" y1="25" x2="88" y2="25" stroke="#001850" strokeWidth="1.0" opacity="0.4" />
+
+        {/* ── Heavy Chrome Pivot Hub ── */}
+        {/* Base plate shadow gap */}
+        <circle cx="96" cy="25" r="21" fill="#060C14" opacity="0.6" />
+
+        {/* Base plate */}
+        <circle cx="96" cy="25" r="19" fill="url(#chromeHub)" stroke="#FFFFFF" strokeWidth="0.8" />
+        <circle cx="96" cy="25" r="16" fill="none" stroke="#FFFFFF" strokeWidth="1.0" opacity="0.4" />
+
+        {/* Center attachment bolt head */}
+        <circle cx="96" cy="25" r="10" fill="url(#boltGrad)" stroke="#263238" strokeWidth="0.8" />
+        {/* Inner socket/recess */}
+        <circle cx="96" cy="25" r="5" fill="#1A2226" />
+        {/* White pinhead dot */}
+        <circle cx="95" cy="24" r="1.5" fill="#FFFFFF" opacity="0.8" />
       </motion.svg>
     </div>
   );

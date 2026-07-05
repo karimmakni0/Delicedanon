@@ -276,15 +276,15 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
             >
               <WheelCanvas rotation={currentRotation} isSpinning={isSpinning} radius={radius} spinDuration={spinDuration} />
 
-              {/* ── Premium Long Pointer centered vertically at the right edge of the wheel ── */}
+              {/* ── Premium Casino-Style Triangular Pointer overlapping the wheel border ── */}
               <div
                 style={{
                   position:  'absolute',
-                  left:      '98.2%', // touches the outer chrome border of the wheel perfectly
+                  left:      '97.0%', // slightly overlaps the wheel rim border for a realistic touch
                   top:       '50%',
                   transform: 'translateY(-50%)',
-                  width:     'clamp(55px, 6.5vw, 95px)',
-                  height:    'clamp(22px, 2.6vw, 34px)',
+                  width:     'clamp(90px, 9vw, 120px)',
+                  height:    'clamp(35px, 3.5vw, 45px)',
                   zIndex:    30,
                 }}
               >
