@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+/* ── CSS Custom Properties — Délice Brand ────────────────────────────────── */
+:root {
+  --blue-deep:   #00276B;
+  --blue-mid:    #003B9E;
+  --blue-bright: #1565C0;
+  --green:       #43A047;
+  --green-dark:  #1B5E20;
+  --red:         #E53935;
+  --white:       #FFFFFF;
+  --font-main:   'Outfit', system-ui, sans-serif;
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: var(--font-main);
+  -webkit-font-smoothing: antialiased;
+  color: white;
+  overflow: hidden;
+}
+
+/* ── Dot-grid texture ─────────────────────────────────────────────────────── */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* ── Background wave animations ────────────────────────────────────────────── */
+@keyframes waveFlow {
+  0%   { transform: translate3d(-90px, 0, 0) scaleY(1); }
+  50%  { transform: translate3d(85px, 10px, 0) scaleY(1.06); }
+  100% { transform: translate3d(-90px, 0, 0) scaleY(1); }
+}
+
+.cream-wave      { animation: waveFlow 22s ease-in-out infinite; }
+.cream-wave-fast { animation: waveFlow 15s ease-in-out infinite reverse; }
+
+/* ── Floating bubbles / dairy particles ────────────────────────────────────── */
+@keyframes particleRise {
+  0%   { transform: translateY(110vh) translateX(0) scale(0.5); opacity: 0; }
+  10%  { opacity: 0.55; }
+  90%  { opacity: 0.45; }
+  100% { transform: translateY(-10vh) translateX(50px) scale(1.15); opacity: 0; }
+}
+
+.particle {
+  position: absolute;
+  bottom: -20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0) 70%);
+  pointer-events: none;
+  animation: particleRise 16s linear infinite;
+}
+
+/* ── Ambient light rays ─────────────────────────────────────────────────────── */
+@keyframes lightRay {
+  0%, 100% { opacity: 0.10; transform: rotate(-4deg) scale(1); }
+  50%       { opacity: 0.22; transform: rotate(4deg)  scale(1.12); }
+}
+
+.light-ray-overlay {
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 45px,
+    rgba(255,255,255,0.04) 45px,
+    rgba(255,255,255,0.04) 90px
+  );
+  animation: lightRay 14s ease-in-out infinite;
+}
+
+/* ── Product image subtle float inside wheel segments ───────────────────────── */
+@keyframes productFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-5px); }
+}
+
+.product-image-floating {
+  animation: productFloat 3.5s ease-in-out infinite;
+}
+
+/* ── Wheel bloom pulse ──────────────────────────────────────────────────────── */
+@keyframes bloomPulse {
+  0%, 100% { opacity: 0.35; transform: translate(-50%, -50%) scale(1.0); }
+  50%       { opacity: 0.55; transform: translate(-50%, -50%) scale(1.08); }
+}
+
+.wheel-bloom {
+  animation: bloomPulse 3.5s ease-in-out infinite;
+}
+
+/* ── Logo gentle float ──────────────────────────────────────────────────────── */
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0px);  }
+  50%       { transform: translateY(-4px); }
+}
+
+.logo-float {
+  animation: logoFloat 3.2s ease-in-out infinite;
+}
+
+/* ── Selection ────────────────────────────────────────────────────────────── */
+::selection { background: rgba(67,160,71,0.35); color: white; }
