@@ -63,8 +63,10 @@ const WheelCanvas: React.FC<WheelCanvasProps> = ({ rotation, isSpinning, radius 
     ease:     (isSpinning ? [0.12, 0.82, 0.08, 1.0] : 'linear') as any,
   };
 
-  // Product image base size: 45% of radius — large, clean
-  const productImgSize = radius * 0.45;
+  // Product image base size: 45% of radius on desktop, ~58% of radius on mobile (~28% increase)
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const productImgScale = isMobile ? 0.58 : 0.45;
+  const productImgSize = radius * productImgScale;
 
   return (
     <div
@@ -271,7 +273,9 @@ const WheelCanvas: React.FC<WheelCanvasProps> = ({ rotation, isSpinning, radius 
                     objectFit:  'contain',
                     mixBlendMode: 'multiply',
                     display:    'block',
-                    filter:     'drop-shadow(0px 4px 8px rgba(0,0,0,0.50))',
+                    filter:     isMobile
+                      ? 'drop-shadow(0px 5px 9px rgba(0,0,0,0.65)) brightness(1.08) contrast(1.04) saturate(1.05)'
+                      : 'drop-shadow(0px 4px 8px rgba(0,0,0,0.50))',
                   }}
                 />
               </foreignObject>

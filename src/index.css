@@ -128,6 +128,13 @@ html, body, #root {
     justify-content: center !important;
     padding: 8px 16px 12px !important; /* reduced padding to minimize vertical empty space */
     box-sizing: border-box !important;
+    background-size: cover !important;
+    background-position: center center !important;
+  }
+
+  .page-bg-overlay {
+    background: radial-gradient(ellipse at 50% 45%, rgba(0, 50, 140, 0.16) 0%, rgba(0, 25, 90, 0.38) 60%, rgba(0, 10, 50, 0.50) 100%) !important;
+    backdrop-filter: blur(3.5px) brightness(1.02) !important;
   }
 
   /* SpinWheel main container: tighten gaps between elements */

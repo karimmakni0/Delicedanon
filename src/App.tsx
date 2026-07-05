@@ -47,7 +47,7 @@ const App: React.FC = () => {
     >
       {/* ── Blue gradient overlay ── */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none page-bg-overlay"
         style={{
           background:     'radial-gradient(ellipse at 50% 45%, rgba(0,70,180,0.32) 0%, rgba(0,40,120,0.50) 60%, rgba(0,18,68,0.65) 100%)',
           backdropFilter: 'blur(6px) brightness(0.94)',
