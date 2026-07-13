@@ -16,6 +16,7 @@ import Pointer from './Pointer';
 import ResultModal from './ResultModal';
 import { useSpinLogic } from '../hooks/useSpinLogic';
 import { TOTAL_SPINS } from '../hooks/usePrizePool';
+import { RegistrationForm } from './RegistrationForm';
 
 const getRadius = () => {
   if (typeof window === 'undefined') return 340;
@@ -45,6 +46,8 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
   const [radius,       setRadius]       = useState(getRadius);
   const [isLanded,     setIsLanded]     = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+
+  const [registeredPlayer, setRegisteredPlayer] = useState<{ firstName: string; lastName: string; cin: string; phone: string } | null>(null);
 
   const spinAudioRef = useRef<HTMLAudioElement | null>(null);
   const winAudioRef  = useRef<HTMLAudioElement | null>(null);
@@ -263,7 +266,7 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
             animate={wheelWrapperAnimation}
             transition={wheelWrapperTransition}
             whileHover={isSpinning || isGameOver ? {} : { scale: 1.022 }}
-            onClick={() => { if (!isSpinning && !isGameOver) spin(); }}
+            onClick={() => { if (!isSpinning && !isGameOver && registeredPlayer) spin(registeredPlayer.cin); }}
           >
             <div
               className="wheel-canvas-container"
@@ -322,8 +325,8 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
             /* ── Normal spin button ── */
             <motion.button
               id="spin-btn"
-              onClick={(e) => { e.stopPropagation(); spin(); }}
-              disabled={isSpinning}
+              onClick={(e) => { e.stopPropagation(); if (registeredPlayer) spin(registeredPlayer.cin); }}
+              disabled={isSpinning || !registeredPlayer}
               className="relative flex items-center gap-3.5 rounded-full font-black uppercase text-white overflow-hidden select-none"
               style={{
                 padding:      'clamp(12px, 2.5vw, 18px) clamp(32px, 6vw, 56px)',
@@ -474,7 +477,12 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
 
               {/* ─ Replay / Réinitialiser ─ */}
               <button
-                onClick={() => { reset(); setShowSettings(false); }}
+                onClick={() => {
+                  reset();
+                  localStorage.removeItem('delice_registered_players');
+                  setRegisteredPlayer(null);
+                  setShowSettings(false);
+                }}
                 style={{
                   display:      'flex',
                   alignItems:   'center',
@@ -619,6 +627,12 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
               </button>
             </motion.div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {!registeredPlayer && (
+          <RegistrationForm onSuccess={(player) => setRegisteredPlayer(player)} />
         )}
       </AnimatePresence>
     </>

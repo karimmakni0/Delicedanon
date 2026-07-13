@@ -13,6 +13,7 @@ import wheelConfig from '../config/wheelConfig';
 import type { SegmentConfig } from '../config/wheelConfig';
 import { usePrizePool } from './usePrizePool';
 import type { PrizeId } from './usePrizePool';
+import { playerService } from '../services/playerService';
 
 export type SpinState = {
   isSpinning:      boolean;
@@ -25,7 +26,7 @@ export type SpinState = {
 };
 
 export type SpinControls = {
-  spin:        () => void;
+  spin:        (playerCin?: string) => void;
   closeResult: () => void;
   reset:       () => void;
 };
@@ -62,7 +63,7 @@ export function useSpinLogic(): [SpinState, SpinControls] {
   }, [segments]);
 
   // ── spin ────────────────────────────────────────────────────────────────────
-  const spin = useCallback(() => {
+  const spin = useCallback((playerCin?: string) => {
     // Guard via ref (not state) — immune to stale closure
     if (isSpinningRef.current || isGameOver) return;
 
@@ -95,6 +96,14 @@ export function useSpinLogic(): [SpinState, SpinControls] {
 
     // 6. Lock spin
     isSpinningRef.current = true;
+
+    // Save the spin outcome immediately to block any exploits (like refreshing during the spin)
+    if (playerCin) {
+      const dbPrizeName = selectedSeg.id === 'chasselane' ? 'Chaise de plage' : selectedSeg.name;
+      playerService.completeSpin(playerCin, selectedSeg.id, dbPrizeName).catch(err => {
+        console.error('Failed to register completed spin in database:', err);
+      });
+    }
 
     // 7. Update state
     setSpinDuration(thisDuration);
