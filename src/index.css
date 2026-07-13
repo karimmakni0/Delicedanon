@@ -202,11 +202,18 @@ html, body, #root {
     font-size: 15px !important;
   }
 
-  #settings-btn {
+  .settings-button {
     position: fixed !important;
-    top: 14px !important;
-    right: 14px !important;
-    z-index: 100 !important;
+    top: max(14px, env(safe-area-inset-top)) !important;
+    right: max(14px, env(safe-area-inset-right)) !important;
+    z-index: 9999 !important;
+  }
+
+  #settings-btn {
+    position: static !important;
+    width: 46px !important;
+    height: 46px !important;
+    font-size: 22px !important;
   }
 
   /* ── Reward Modal responsive improvements ── */

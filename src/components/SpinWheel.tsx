@@ -405,7 +405,15 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
       />
 
       {/* ── Settings gear ── */}
-      <div style={{ position: 'fixed', top: 16, right: 16, zIndex: 45 }}>
+      <div
+        className="settings-button"
+        style={{
+          position: 'fixed',
+          top: 'max(16px, env(safe-area-inset-top))',
+          right: 'max(16px, env(safe-area-inset-right))',
+          zIndex: 9999,
+        }}
+      >
         {/* Gear button */}
         <motion.button
           id="settings-btn"
