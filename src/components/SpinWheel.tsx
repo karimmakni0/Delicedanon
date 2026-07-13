@@ -17,6 +17,7 @@ import ResultModal from './ResultModal';
 import { useSpinLogic } from '../hooks/useSpinLogic';
 import { TOTAL_SPINS } from '../hooks/usePrizePool';
 import { RegistrationForm } from './RegistrationForm';
+import { PlayerManagement } from './PlayerManagement';
 
 const getRadius = () => {
   if (typeof window === 'undefined') return 340;
@@ -48,6 +49,7 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
   const [showSettings, setShowSettings] = useState(false);
 
   const [registeredPlayer, setRegisteredPlayer] = useState<{ firstName: string; lastName: string; cin: string; phone: string } | null>(null);
+  const [isPlayerManagementOpen, setIsPlayerManagementOpen] = useState(false);
 
   const spinAudioRef = useRef<HTMLAudioElement | null>(null);
   const winAudioRef  = useRef<HTMLAudioElement | null>(null);
@@ -483,6 +485,35 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
                 </p>
               </div>
 
+              {/* ─ Gestion des participants ─ */}
+              <button
+                onClick={() => {
+                  setIsPlayerManagementOpen(true);
+                  setShowSettings(false);
+                }}
+                style={{
+                  display:      'flex',
+                  alignItems:   'center',
+                  gap:          10,
+                  width:        '100%',
+                  padding:      '11px 18px',
+                  background:   'none',
+                  border:       'none',
+                  cursor:       'pointer',
+                  fontFamily:   'var(--font-main)',
+                  fontSize:     14,
+                  fontWeight:   600,
+                  color:        '#FFFFFF',
+                  textAlign:    'left',
+                  transition:   'background 0.15s',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(0,80,200,0.25)')}
+                onMouseLeave={e => (e.currentTarget.style.background = 'none')}
+              >
+                <span style={{ fontSize: 16 }}>👥</span>
+                Gestion des participants
+              </button>
+
               {/* ─ Replay / Réinitialiser ─ */}
               <button
                 onClick={() => {
@@ -641,6 +672,15 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
       <AnimatePresence>
         {!registeredPlayer && (
           <RegistrationForm onSuccess={(player) => setRegisteredPlayer(player)} />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isPlayerManagementOpen && (
+          <PlayerManagement
+            isOpen={isPlayerManagementOpen}
+            onClose={() => setIsPlayerManagementOpen(false)}
+          />
         )}
       </AnimatePresence>
     </>
