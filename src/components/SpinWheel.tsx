@@ -392,7 +392,15 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ onLogout }) => {
         </motion.p>
       </div>
 
-      <ResultModal winner={winner} isOpen={showResult} onClose={closeResult} isGameOver={isGameOver} />
+      <ResultModal
+        winner={winner}
+        isOpen={showResult}
+        onClose={() => {
+          closeResult();
+          setRegisteredPlayer(null);
+        }}
+        isGameOver={isGameOver}
+      />
 
       {/* ── Settings gear ── */}
       <div style={{ position: 'fixed', top: 16, right: 16, zIndex: 45 }}>
